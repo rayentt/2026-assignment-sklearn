@@ -99,8 +99,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-import numpy as np 
-import pandas as pd
+import numpy as np
 
 
 
@@ -134,10 +133,12 @@ class RegistrationSplit(BaseCrossValidator):
                 continue
             idx_train = np.flatnonzero((periods == month).to_numpy())
             idx_test = np.flatnonzero((periods == nxt).to_numpy())
-            if y is not None and (len(np.unique(y[idx_train])) < 2 or len(np.unique(y[idx_test])) < 2):
+            if y is not None and (
+                len(np.unique(y[idx_train])) < 2 or
+                len(np.unique(y[idx_test])) < 2):
                 continue
             yield idx_train, idx_test
-        
+
 
     def get_n_splits(self, X, y=None, groups=None):
         """Return the number of valid splitting iterations.
@@ -158,7 +159,6 @@ class RegistrationSplit(BaseCrossValidator):
         """
         # Return the number of valid splits - TODO
         return sum(1 for i in self.iter_splits(X,y))
-        
 
     def split(self, X, y, groups=None):
         """Generate indices to split data into training and test sets.
